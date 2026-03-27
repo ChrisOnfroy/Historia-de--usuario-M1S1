@@ -13,7 +13,7 @@ def addProduct():
     validateProduct = True
     while validateProduct:
         print("")
-        nameProduct = input("Enter the name product: ").strip()
+        nameProduct = input("Enter the name product: ").strip().lower()
         validateProduct = validationProductName(nameProduct)       
         
     validatePrice = True  
@@ -74,8 +74,37 @@ def showInventory():
                     
                 print(f"{i:<4} {nombre:<25} ${precio:<11.2f} {cantidad:<10}")
         
-
+def searchProduct():
+    with open("inventory.csv", mode="r") as archive:
+        is_true = True
         
+        while is_true:
+            
+            search = input("Enter name product: ").lower().strip()
+            lines = archive.readlines()
+            exist = False
+            for i, line in enumerate(lines[1:], 1):
+                
+                data = line.strip().split(',')
+                
+                if data[0] == search:
+                    
+                    name = data[0]
+                    price = float(data[1])
+                    quantity = int(data[2])
+                    
+                    print("")
+                    print(f"{i:<4} {name:<25} ${price:<11.2f} {quantity:<10}")
+                    
+                    exist = True
+                    return False
+                    
+            if not exist:
+                print("Product name not found.")
+                return False
+
+
+                    
         
 #This feature helps us calculate all the data for each product and how many there are.
 def calculateStatistics():
@@ -91,4 +120,5 @@ def calculateStatistics():
     The total values is: {totalValuesInventory}
     the Quantity total the produtcs is: {i}
     """)
+    
     
