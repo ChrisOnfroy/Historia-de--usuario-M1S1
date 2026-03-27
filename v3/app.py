@@ -26,7 +26,7 @@ def menu():
             elif menu == 3:
                 searchProduct()
             elif menu == 4:
-                print("Here you can update product")
+                UpdateProduct()
             elif menu == 5:
                 print("Here you can delete product")
             elif menu == 6:

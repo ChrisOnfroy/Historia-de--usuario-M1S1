@@ -56,8 +56,7 @@ def addProduct():
         
         # Escribir el nuevo producto
         writer.writerow([data[0][1], data[1][1], data[2][1]])
-            
-        print(f"Product '{nameProduct}' added successfully!")
+
 
 #This feature helps us show the user all the products stored in inventory.
 def showInventory():
@@ -103,22 +102,67 @@ def searchProduct():
                 print("Product name not found.")
                 return False
 
-
-                    
+def UpdateProduct():
+    
+    filename = "inventory.csv"
+    # Primero leer todo el contenido
+    try:
+        with open(filename, mode="r") as archive:
+            lines = archive.readlines()
+    except FileNotFoundError:
+        print("Inventory file not found.")
+        return False
+    search = input("Enter product name: ").lower().strip()
+    found = False
+    updated_lines = []
+    # Procesar cada línea
+    for line in lines:
+        data = line.strip().split(',')
         
+        # Si es la primera línea (encabezado) o no coincide la búsqueda
+        if lines.index(line) == 0 or data[0].lower() != search:
+            updated_lines.append(line)
+        else:
+            # Encontramos el producto a actualizar
+            found = True
+            print(f"Updating product: {data[0]}")
+            
+            # Obtener nuevos valores
+            new_name = input("Enter new name: ").strip()
+            new_price = float(input("Enter new price: "))
+            new_quantity = int(input("Enter new quantity: "))
+            
+            # Crear línea actualizada
+            updated_line = f"{new_name},{new_price},{new_quantity}\n"
+            updated_lines.append(updated_line)
+            print("Product updated successfully!")
+            
+    if not found:
+        print("Product name not found.")
+        return False
+    # Escribir todo el contenido actualizado
+    with open(filename, "w") as archive:
+        archive.writelines(updated_lines)
+    
+    return True
+    
 #This feature helps us calculate all the data for each product and how many there are.
 def calculateStatistics():
     totalValuesInventory = 0
-    
-    #This loop allows us to calculate the total inventory.
-    for i, product in enumerate(inventory):
-        data = list(product.items())
-        totalValuesInventory += calculateTotalProduct(data[1][1], data[2][1])
-        i += 1
+    with open("inventory.csv", mode="r") as archive:
+        lines = archive.readlines()
+        
+        for i, line in enumerate(lines[1:], 1):
+            
+            data = line.strip().split(',')
+            
+            price = float(data[1])
+            quantity = int(data[2])
+            
+            totalValuesInventory += calculateTotalProduct(price, quantity)
+            i += 1
 
     print(f"""
     The total values is: {totalValuesInventory}
     the Quantity total the produtcs is: {i}
     """)
-    
-    
