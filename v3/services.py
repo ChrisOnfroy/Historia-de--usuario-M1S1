@@ -145,7 +145,8 @@ def UpdateProduct():
         archive.writelines(updated_lines)
     
     return True
-    
+def deleteProduct():
+    print("")
 #This feature helps us calculate all the data for each product and how many there are.
 def calculateStatistics():
     totalValuesInventory = 0

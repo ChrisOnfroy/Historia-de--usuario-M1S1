@@ -28,7 +28,7 @@ def menu():
             elif menu == 4:
                 UpdateProduct()
             elif menu == 5:
-                print("Here you can delete product")
+                deleteProduct()
             elif menu == 6:
                 calculateStatistics()
             elif menu == 7:
