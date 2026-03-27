@@ -1,5 +1,6 @@
 from validations import *
 from functions import *
+import csv as csv
 
 inventory = []
 
@@ -41,6 +42,22 @@ def addProduct():
                }
     
     inventory.append(product)
+    
+    with open("v3/inventory/inventory.csv", mode="a", newline='', encoding='utf-8') as archive:
+        
+        writer = csv.writer(archive)
+                
+        # Verificar si el archivo está vacío para escribir el encabezado
+        archive.seek(0, 2)  
+        if archive.tell() == 0:  # Si el archivo está vacío
+            writer.writerow(["name", "price", "quantity"])
+            
+        for product in inventory:
+            data = list(product.items())
+            # Escribir el nuevo producto
+            writer.writerow([data[0][1], data[1][1], data[2][1]])
+            
+            print(f"Product '{nameProduct}' added successfully!")
 
 #This feature helps us show the user all the products stored in inventory.
 def showInventory():
