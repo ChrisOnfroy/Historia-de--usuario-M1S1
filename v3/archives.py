@@ -1,9 +1,10 @@
 import csv
 from services import inventory
 
-# Nombre del archivo donde se guardarán los datos
+# name of the archive where saves information about inventory
 FILENAME = "v3/data/inventory.csv"
 
+# this method is about save inventory in filename.csv
 def save_inventory():
 
     try:
@@ -11,7 +12,6 @@ def save_inventory():
 
             fieldnames = ['name', 'price', 'quantity']
             writer = csv.DictWriter(file, fieldnames=fieldnames)
-            
 
             writer.writeheader()
 
@@ -25,6 +25,7 @@ def save_inventory():
         print("\n Error saving inventory")
         return False
 
+#this method is about load inventory in filename.csv
 def load_inventory():
     
     try:
